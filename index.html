@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<title>Bhag Bhai Bhag - Music Fix!</title>
+<title>Bhag Bhai Bhag - Tractor Wala Kisan!</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:Arial,sans-serif;background:#1a1a2e;color:white;text-align:center;overflow:hidden;user-select:none;-webkit-tap-highlight-color:transparent}
@@ -12,20 +12,21 @@ body{font-family:Arial,sans-serif;background:#1a1a2e;color:white;text-align:cent
 .top p{font-size:13px;opacity:.8}
 .score-box{display:flex;justify-content:center;gap:8px;margin-top:6px}
 .score-box div{background:#ffdf70;color:#000;padding:6px 12px;border-radius:20px;font-weight:bold;font-size:14px}
-#game{position:relative;width:100%;max-width:480px;height:460px;margin:6px auto;background:#333;border:3px solid #ffdf70;border-radius:15px;overflow:hidden;touch-action:none}
-.lane{position:absolute;top:0;height:100%;width:33.33%;background:#555;border-right:2px dashed rgba(255,255,255,.4)}
-#lane1{left:0;background:#5e5e5e}
-#lane2{left:33.33%;background:#6a6a6a}
-#lane3{left:66.66%;background:#5e5e5e;border-right:0}
+#game{position:relative;width:100%;max-width:480px;height:460px;margin:6px auto;background:#4CAF50;border:3px solid #ffdf70;border-radius:15px;overflow:hidden;touch-action:none;transition:background 0.8s}
+#bgLabel{position:absolute;top:8px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.6);padding:5px 12px;border-radius:20px;font-size:13px;font-weight:bold;z-index:20;white-space:nowrap}
+.lane{position:absolute;top:0;height:100%;width:33.33%;border-right:2px dashed rgba(255,255,255,.4);transition:background 0.8s}
+#lane1{left:0}
+#lane2{left:33.33%}
+#lane3{left:66.66%;border-right:0}
 .roadLine{position:absolute;width:6px;height:50px;background:#fff;border-radius:5px;opacity:.7;z-index:1}
-#player{position:absolute;bottom:25px;left:50%;font-size:50px;z-index:10;transition:left .16s;transform:translateX(-50%)}
+#player{position:absolute;bottom:25px;left:50%;font-size:52px;z-index:10;transition:left .16s;transform:translateX(-50%)}
 #player.running{animation:runBounce 0.28s infinite}
 @keyframes runBounce{0%{transform:translateX(-50%) translateY(0) rotate(-3deg)}50%{transform:translateX(-50%) translateY(-8px) rotate(3deg)}100%{transform:translateX(-50%) translateY(0) rotate(-3deg)}}
 #player.roll{font-size:38px !important;animation:none}
 #teacher{position:absolute;bottom:2px;left:50%;font-size:44px;z-index:5;transition:left .16s;transform:translateX(-50%)}
 #teacher.running{animation:runBounce 0.32s infinite}
 .obj{position:absolute;font-size:42px;z-index:4;transform:translateX(-50%)}
-.coin{position:absolute;font-size:30px;z-index:3;transform:translateX(-50%);animation:spin 0.6s infinite}
+.coin{position:absolute;font-size:32px;z-index:3;transform:translateX(-50%);animation:spin 0.6s infinite}
 @keyframes spin{0%{transform:translateX(-50%) scaleX(1)}50%{transform:translateX(-50%) scaleX(0.3)}100%{transform:translateX(-50%) scaleX(1)}}
 #msg{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,.92);padding:20px;border-radius:15px;width:88%;z-index:30;display:none}
 #msg h2{color:#ffdf70;font-size:23px;margin-bottom:8px}
@@ -37,56 +38,30 @@ button{padding:12px 18px;border:0;border-radius:30px;background:#ffd34f;font-siz
 #jumpBtn{background:#ff5722;color:white}
 #rollBtn{background:#9C27B0;color:white}
 #rightBtn{background:#4CAF50;color:white}
-#musicBtn{background:#00E676;color:#000;padding:10px 18px;font-size:16px;margin-top:6px;border:2px solid #fff;animation:blink 1s infinite}
-@keyframes blink{0%{transform:scale(1)}50%{transform:scale(1.05)}100%{transform:scale(1)}}
+.songBtn{padding:12px 20px;font-size:16px;margin:6px 4px;border:2px solid white}
+#playBtn{background:#00E676;color:#000}
+#stopBtn{background:#ff5722;color:white}
 .small{font-size:12px;opacity:.7;margin-top:5px}
 </style>
 </head>
 <body>
- <!-- SONG ALAG SE ADD KARNE WALA CODE - START -->
-
-<audio id="mySong" loop>
-  <source src="farming.mp3" type="audio/mpeg">
-</audio>
-
-<button onclick="playMySong()" style="background:#00E676;color:#000;padding:12px 20px;border-radius:30px;font-weight:bold;font-size:17px;border:2px solid white;margin:10px;">
-  🔊 SONG CHALAO
-</button>
-
-<button onclick="stopMySong()" style="background:#ff5722;color:white;padding:12px 20px;border-radius:30px;font-weight:bold;font-size:17px;border:2px solid white;margin:10px;">
-  🔇 SONG BAND KARO
-</button>
-
-<script>
-let mySong = document.getElementById("mySong");
-
-function playMySong(){
-  mySong.volume = 1.0; // Full Awaz
-  mySong.play();
-  alert("Gaana chal gaya! 🔊🎵");
-}
-
-function stopMySong(){
-  mySong.pause();
-}
-</script>
-
-<!-- SONG WALA CODE - KHATAM -->
+<audio id="mySong" loop><source src="farming.mp3" type="audio/mpeg"></audio>
 <div class="top">
-<h1>🏃 BHAG BHAI BHAG 🚜</h1>
-<p>🎵 Farming - Laddi Chahal Beat 🎵</p>
-<div class="score-box"><div>Score: <span id="score">0</span></div><div>🪙 Coin: <span id="coins">0</span></div><div>Best: <span id="best">0</span></div></div>
-<button id="musicBtn" onclick="unlockMusic()">🔊 MUSIC ON KARO - TAP KARO 🔊</button>
-<p id="musicStatus" style="font-size:12px;color:#ffdf70;margin-top:4px">Music band hai, upar wala button dabao!</p>
+<h1>🚜 BHAG KISAN BHAG 👨‍🌾</h1>
+<p>🎵 Farming - Laddi Chahal 🎵</p>
+<div class="score-box"><div>Score: <span id="score">0</span></div><div>💵 Note: <span id="coins">0</span></div><div>Best: <span id="best">0</span></div></div>
+<button id="playBtn" class="songBtn" onclick="playMySong()">🔊 SONG CHALAO</button>
+<button id="stopBtn" class="songBtn" onclick="stopMySong()">🔇 SONG BAND KARO</button>
+<p id="songStatus" style="font-size:12px;color:#ffdf70;">Song band hai, SONG CHALAO dabao!</p>
 </div>
-<audio id="farmingAudio" loop preload="auto"><source src="farming.mp3" type="audio/mpeg"></audio>
 
 <div id="game">
+<div id="bgLabel">🌾 KHET ME BHAG RAHA HAI!</div>
 <div class="lane" id="lane1"></div>
 <div class="lane" id="lane2"></div>
 <div class="lane" id="lane3"></div>
 <div id="teacher">👩‍🏫</div>
-<div id="player">🏃‍♂️</div>
+<div id="player">👨‍🌾</div>
 <div id="msg"><h2 id="msgTitle">Ready Ho?</h2><p id="msgText"></p><button onclick="startGame()">🔁 Phir Se Bhago</button></div>
 </div>
 
@@ -96,88 +71,63 @@ function stopMySong(){
 <button id="rollBtn" onclick="roll()">⬇️ ROLL</button>
 <button id="rightBtn" onclick="move(1)">RIGHT ➡️</button>
 </div>
-<p class="small">Pehle MUSIC ON KARO dabao, fir game khelo!</p>
+<p class="small">Khet -> Gaon -> Raat! Note uthate jao!</p>
 
 <script>
+let mySong=document.getElementById("mySong");
+let songStatus=document.getElementById("songStatus");
+function playMySong(){ mySong.volume=1.0; mySong.play().then(()=>{ songStatus.innerText="✅ Farming gaana baj raha hai! 🎵🚜"; }).catch(()=>{ songStatus.innerText="❌ Gaana nahi mila! farming.mp3 upload kiya?"; alert("Gaana nahi mila! GitHub me farming.mp3 upload kiya hai na?"); }); }
+function stopMySong(){ mySong.pause(); songStatus.innerText="Song band hai"; }
+
 let player=document.getElementById("player");
 let teacher=document.getElementById("teacher");
 let game=document.getElementById("game");
+let bgLabel=document.getElementById("bgLabel");
 let scoreEl=document.getElementById("score");
 let coinsEl=document.getElementById("coins");
 let bestEl=document.getElementById("best");
 let msg=document.getElementById("msg");
 let msgTitle=document.getElementById("msgTitle");
 let msgText=document.getElementById("msgText");
-let farmingAudio=document.getElementById("farmingAudio");
-let musicBtn=document.getElementById("musicBtn");
-let musicStatus=document.getElementById("musicStatus");
 let score=0,coins=0,best=localStorage.getItem("bhagSubwayBest")||0;
 bestEl.innerText=best;
 let isJumping=false,isRolling=false,gameOver=false,gameStarted=false,objs=[];
 let gameInterval,spawnInterval,lineInterval,runInterval,speed=5;
 let currentLane=1;
 let lanePos=[16.66,50,83.33];
-let musicOn=false,audioCtx=null,musicInterval=null,useRealSong=false,musicUnlocked=false;
-let funnyLines=["Teacher ne pakad liya! Kal mummy ko lekar aana! 😂","Book se takra gaya bhai!","Coin ke chakkar me pakda gaya!"];
-let runFrames=["🏃‍♂️","🏃","🏃‍♂️","🏃‍♂️‍➡️"];
+let funnyLines=["Teacher ne pakad liya! Kal mummy ko lekar aana! 😂","Tractor se takra gaya bhai!","Note ke chakkar me pakda gaya!"];
+// 1-B TRACTOR WALA KISAN
+let runFrames=["👨‍🌾","🧑‍🌾","👨‍🌾","🚜"];
 let runIndex=0;
 
-// *** MUSIC UNLOCK - Sabse Important Fix ***
-function unlockMusic(){
- musicOn=true; musicUnlocked=true;
- // AudioContext ko zabardasti ON karo
- try{
-  if(!audioCtx) audioCtx=new (window.AudioContext||window.webkitAudioContext)();
-  if(audioCtx.state==='suspended') audioCtx.resume();
-  // Ek choti si beep bajake test karo
-  let o=audioCtx.createOscillator(); let g=audioCtx.createGain();
-  o.frequency.value=800; g.gain.value=0.2; o.connect(g); g.connect(audioCtx.destination);
-  o.start(); o.stop(audioCtx.currentTime+0.15);
- }catch(e){}
- // Asli Farming gaana try karo
- farmingAudio.volume=1.0;
- farmingAudio.play().then(()=>{ useRealSong=true; musicStatus.innerText="✅ Farming gaana baj raha hai! 🎵"; }).catch(()=>{
-  useRealSong=false;
-  musicStatus.innerText="🎵 Farming Beat baj raha hai! (Asli gaana chahiye to farming.mp3 upload karo)";
-  startBeat();
- });
- musicBtn.innerText="🔇 Music BAND Karo";
- musicBtn.style.background="#ff5722"; musicBtn.style.color="white"; musicBtn.style.animation="none";
- musicBtn.onclick=()=>{ toggleMusic(); };
- if(gameStarted && !gameOver) startBeat();
- alert("Music ON ho gaya! Ab awaz aayegi! 🔊");
-}
-function toggleMusic(){
- musicOn=!musicOn;
- if(!musicOn){ farmingAudio.pause(); musicBtn.innerText="🔊 MUSIC ON KARO"; musicBtn.style.background="#00E676"; musicBtn.style.color="#000"; musicStatus.innerText="Music band hai"; }
- else { musicBtn.innerText="🔇 Music BAND Karo"; musicBtn.style.background="#ff5722"; musicBtn.style.color="white"; farmingAudio.play().catch(()=>{ startBeat(); }); musicStatus.innerText="Music ON hai!"; }
+// 4 - SARE BACKGROUND BADALTE RAHENGE
+function updateBackground(){
+  let stage = Math.floor(score/250) % 3; // Har 250 score pe background badlega
+  let l1=document.getElementById("lane1"), l2=document.getElementById("lane2"), l3=document.getElementById("lane3");
+  if(stage===0){
+    // KHET
+    game.style.background="#4CAF50";
+    l1.style.background="#5cb85c"; l2.style.background="#66bb6a"; l3.style.background="#5cb85c";
+    bgLabel.innerText="🌾 KHET ME BHAG RAHA HAI!";
+  } else if(stage===1){
+    // GAON
+    game.style.background="#D2A679";
+    l1.style.background="#C9A86A"; l2.style.background="#D2B48C"; l3.style.background="#C9A86A";
+    bgLabel.innerText="🏡 GAON ME BHAG RAHA HAI!";
+  } else {
+    // RAAT
+    game.style.background="#1a1a3e";
+    l1.style.background="#222244"; l2.style.background="#2a2a4a"; l3.style.background="#222244";
+    bgLabel.innerText="🌙 RAAT ME BHAG RAHA HAI! 🌟";
+  }
 }
 
-function getAudio(){ if(!audioCtx) audioCtx=new (window.AudioContext||window.webkitAudioContext)(); if(audioCtx.state==='suspended') audioCtx.resume(); return audioCtx; }
-function playTone(f,d,t='sine',v=0.35){ if(!musicOn || useRealSong || !musicUnlocked) return; try{ let c=getAudio(); let o=c.createOscillator(); let g=c.createGain(); o.frequency.value=f; o.type=t; g.gain.value=v; o.connect(g); g.connect(c.destination); o.start(); o.stop(c.currentTime+d);}catch(e){} }
-function playJump(){ playTone(500,0.1,'sine',0.4); setTimeout(()=>playTone(800,0.1,'sine',0.4),60); }
-function playCoin(){ playTone(1000,0.08,'sine',0.4); setTimeout(()=>playTone(1400,0.1,'sine',0.4),70); }
-function playOver(){ if(useRealSong) farmingAudio.pause(); playTone(300,0.3,'sawtooth',0.3); }
-function startBeat(){
- if(musicInterval) return;
- let beat=0;
- musicInterval=setInterval(()=>{
-  if(musicOn && musicUnlocked && gameStarted && !gameOver && !useRealSong){
-   if(beat%2===0) playTone(110,0.18,'sine',0.5);
-   if(beat%2===1) playTone(180,0.08,'square',0.15);
-   if(beat%4===2) playTone(220,0.1,'sawtooth',0.12);
-   let notes=[262,262,294,330,392,392,330,294,262,330,392,440];
-   playTone(notes[beat%notes.length],0.16,'triangle',0.15);
-   beat++;
-  }
- },175);
-}
 function startRunning(){
  player.classList.add("running"); teacher.classList.add("running");
  if(runInterval) clearInterval(runInterval);
- runInterval=setInterval(()=>{ if(gameStarted && !gameOver && !isJumping && !isRolling){ runIndex=(runIndex+1)%runFrames.length; player.innerText=runFrames[runIndex]; } },140);
+ runInterval=setInterval(()=>{ if(gameStarted && !gameOver && !isJumping && !isRolling){ runIndex=(runIndex+1)%runFrames.length; player.innerText=runFrames[runIndex]; } },160);
 }
-function stopRunning(){ player.classList.remove("running"); teacher.classList.remove("running"); clearInterval(runInterval); player.innerText="🏃‍♂️"; }
+function stopRunning(){ player.classList.remove("running"); teacher.classList.remove("running"); clearInterval(runInterval); player.innerText="👨‍🌾"; }
 function startRoadLines(){
  if(lineInterval) clearInterval(lineInterval);
  lineInterval=setInterval(()=>{
@@ -192,22 +142,22 @@ function move(dir){
  if(gameOver) return;
  if(!gameStarted){ startGame(); return; }
  currentLane=Math.max(0,Math.min(2,currentLane+dir));
- player.style.left=lanePos[currentLane]+"%"; teacher.style.left=lanePos[currentLane]+"%"; playTone(600,0.07,'sine',0.2);
+ player.style.left=lanePos[currentLane]+"%"; teacher.style.left=lanePos[currentLane]+"%";
 }
 function jump(){
  if(gameOver) return;
  if(!gameStarted){ startGame(); return; }
  if(isJumping||isRolling) return;
- isJumping=true; playJump(); player.classList.remove("running"); player.innerText="🦸";
+ isJumping=true; player.classList.remove("running"); player.innerText="🦸‍♂️";
  let pos=25;
- let up=setInterval(()=>{ pos+=18; player.style.bottom=pos+"px"; if(pos>=170){ clearInterval(up); let down=setInterval(()=>{ pos-=16; player.style.bottom=pos+"px"; if(pos<=25){ clearInterval(down); player.style.bottom="25px"; isJumping=false; if(gameStarted && !gameOver) player.classList.add("running"); player.innerText="🏃‍♂️"; } },18); } },18);
+ let up=setInterval(()=>{ pos+=18; player.style.bottom=pos+"px"; if(pos>=170){ clearInterval(up); let down=setInterval(()=>{ pos-=16; player.style.bottom=pos+"px"; if(pos<=25){ clearInterval(down); player.style.bottom="25px"; isJumping=false; if(gameStarted && !gameOver) player.classList.add("running"); player.innerText="👨‍🌾"; } },18); } },18);
 }
 function roll(){
  if(gameOver) return;
  if(!gameStarted){ startGame(); return; }
  if(isRolling||isJumping) return;
- isRolling=true; playTone(300,0.1,'sine',0.2); player.classList.remove("running"); player.innerText="🙇"; player.classList.add("roll");
- setTimeout(()=>{ player.innerText="🏃‍♂️"; player.classList.remove("roll"); isRolling=false; if(gameStarted && !gameOver) player.classList.add("running"); },650);
+ isRolling=true; player.classList.remove("running"); player.innerText="🙇‍♂️"; player.classList.add("roll");
+ setTimeout(()=>{ player.innerText="👨‍🌾"; player.classList.remove("roll"); isRolling=false; if(gameStarted && !gameOver) player.classList.add("running"); },650);
 }
 function spawn(){
  if(gameOver) return;
@@ -215,45 +165,22 @@ function spawn(){
  let lane=Math.floor(Math.random()*3);
  let el=document.createElement("div"); el.dataset.lane=lane;
  if(isCoin){
-  el.className="obj coin"; el.innerText="🪙"; el.dataset.type="coin";
-  if(Math.random()<0.4){ for(let i=1;i<=2;i++){ let extra=document.createElement("div"); extra.className="obj coin"; extra.innerText="🪙"; extra.dataset.type="coin"; extra.dataset.lane=lane; extra.style.left=lanePos[lane]+"%"; extra.style.top=(-50 - i*55)+"px"; game.appendChild(extra); objs.push(extra); let mv2=setInterval(()=>{ if(gameOver){clearInterval(mv2);return;} let t=parseInt(extra.style.top); t+=speed; extra.style.top=t+"px"; if(parseInt(extra.dataset.lane)===currentLane && t>330 && t<420){ coins++; coinsEl.innerText=coins; playCoin(); extra.remove(); objs=objs.filter(o=>o!==extra); clearInterval(mv2); } if(t>480){ clearInterval(mv2); extra.remove(); objs=objs.filter(o=>o!==extra); } },28); } }
+  // 5-A COIN KI JAGAH NOTE 💵
+  el.className="obj coin"; el.innerText="💵"; el.dataset.type="coin";
+  if(Math.random()<0.4){ for(let i=1;i<=2;i++){ let extra=document.createElement("div"); extra.className="obj coin"; extra.innerText="💵"; extra.dataset.type="coin"; extra.dataset.lane=lane; extra.style.left=lanePos[lane]+"%"; extra.style.top=(-50 - i*55)+"px"; game.appendChild(extra); objs.push(extra); let mv2=setInterval(()=>{ if(gameOver){clearInterval(mv2);return;} let t=parseInt(extra.style.top); t+=speed; extra.style.top=t+"px"; if(parseInt(extra.dataset.lane)===currentLane && t>330 && t<420){ coins++; coinsEl.innerText=coins; extra.remove(); objs=objs.filter(o=>o!==extra); clearInterval(mv2); } if(t>480){ clearInterval(mv2); extra.remove(); objs=objs.filter(o=>o!==extra); } },28); } }
  } else {
-  el.className="obj"; el.dataset.type="obs"; let items=["🪑","🧹","🚧","📚","🚂","🪣","📖"]; el.innerText=items[Math.floor(Math.random()*items.length)]; if(Math.random()<0.18){ el.innerText="🚧"; el.dataset.high="1"; el.style.fontSize="52px"; }
+  el.className="obj"; el.dataset.type="obs"; let items=["🪑","🧹","🚧","📚","🚜","🪣","🌾"]; el.innerText=items[Math.floor(Math.random()*items.length)]; if(Math.random()<0.18){ el.innerText="🚧"; el.dataset.high="1"; el.style.fontSize="52px"; }
  }
  el.style.left=lanePos[lane]+"%"; el.style.top="-50px"; game.appendChild(el); objs.push(el);
- let mv=setInterval(()=>{ if(gameOver){ clearInterval(mv); return; } let top=parseInt(el.style.top); top+=speed; el.style.top=top+"px"; let pBottom=parseInt(player.style.bottom||25); let sameLane=(parseInt(el.dataset.lane)===currentLane); if(sameLane && top>330 && top<420){ if(el.dataset.type==="coin"){ coins++; coinsEl.innerText=coins; playCoin(); el.remove(); objs=objs.filter(o=>o!==el); clearInterval(mv); } else { if(el.dataset.high==="1"){ if(!isRolling && pBottom<60){ gameOverFunc(); clearInterval(mv); } } else { if(pBottom<60){ gameOverFunc(); clearInterval(mv); } } } } if(top>480){ clearInterval(mv); el.remove(); objs=objs.filter(o=>o!==el); } },28);
+ let mv=setInterval(()=>{ if(gameOver){ clearInterval(mv); return; } let top=parseInt(el.style.top); top+=speed; el.style.top=top+"px"; let pBottom=parseInt(player.style.bottom||25); let sameLane=(parseInt(el.dataset.lane)===currentLane); if(sameLane && top>330 && top<420){ if(el.dataset.type==="coin"){ coins++; coinsEl.innerText=coins; el.remove(); objs=objs.filter(o=>o!==el); clearInterval(mv); } else { if(el.dataset.high==="1"){ if(!isRolling && pBottom<60){ gameOverFunc(); clearInterval(mv); } } else { if(pBottom<60){ gameOverFunc(); clearInterval(mv); } } } } if(top>480){ clearInterval(mv); el.remove(); objs=objs.filter(o=>o!==el); } },28);
 }
 function startGame(){
- // Game start pe bhi music unlock try karo
- if(!musicUnlocked){ alert("Pehle upar wala 🔊 MUSIC ON KARO button dabao, tabhi awaz aayegi!"); }
  score=0; coins=0; scoreEl.innerText=0; coinsEl.innerText=0; gameOver=false; gameStarted=true; msg.style.display="none";
- currentLane=1; speed=5; player.style.left="50%"; teacher.style.left="50%"; player.style.bottom="25px"; player.innerText="🏃‍♂️";
+ currentLane=1; speed=5; player.style.left="50%"; teacher.style.left="50%"; player.style.bottom="25px"; player.innerText="👨‍🌾";
  objs.forEach(o=>o.remove()); objs=[];
- clearInterval(gameInterval); clearInterval(spawnInterval);
- if(musicUnlocked && musicOn){ if(useRealSong) farmingAudio.play().catch(()=>{}); else startBeat(); }
- startRunning(); startRoadLines();
- gameInterval=setInterval(()=>{ if(!gameOver){ score++; scoreEl.innerText=score; if(score%200===0) speed+=0.4; if(score>best){ best=score; bestEl.innerText=best; localStorage.setItem("bhagSubwayBest",best); } } },80);
+ clearInterval(gameInterval); clearInterval(spawnInterval); startRunning(); startRoadLines(); updateBackground();
+ gameInterval=setInterval(()=>{ if(!gameOver){ score++; scoreEl.innerText=score; updateBackground(); if(score%200===0) speed+=0.4; if(score>best){ best=score; bestEl.innerText=best; localStorage.setItem("bhagSubwayBest",best); } } },80);
  spawnInterval=setInterval(spawn,600);
 }
 function gameOverFunc(){
- gameOver=true; playOver(); stopRunning(); clearInterval(lineInterval); clearInterval(gameInterval); clearInterval(spawnInterval);
- let line=funnyLines[Math.floor(Math.random()*funnyLines.length)];
- msgTitle.innerText="Pakde Gaye! 😭";
- msgText.innerHTML=`<b>Score: ${score} | Coin: ${coins} 🪙</b><br>${line}<br><br>Best: ${best}`;
- msg.style.display="block"; gameStarted=false;
-}
-document.addEventListener("keydown",(e)=>{
- if(e.code==="Space"||e.code==="ArrowUp"){ e.preventDefault(); jump(); }
- if(e.code==="ArrowLeft"){ e.preventDefault(); move(-1); }
- if(e.code==="ArrowRight"){ e.preventDefault(); move(1); }
- if(e.code==="ArrowDown"){ e.preventDefault(); roll(); }
-});
-let sx=0,sy=0;
-game.addEventListener("touchstart",e=>{ sx=e.touches[0].clientX; sy=e.touches[0].clientY; },{passive:true});
-game.addEventListener("touchend",e=>{ let dx=e.changedTouches[0].clientX-sx; let dy=e.changedTouches[0].clientY-sy; if(Math.abs(dx)>Math.abs(dy)){ if(dx<-35) move(-1); else if(dx>35) move(1); } else { if(dy<-35) jump(); else if(dy>35) roll(); } },{passive:true});
-msgTitle.innerText="Ready Ho? 🚜🎵";
-msgText.innerHTML="Pehle MUSIC ON KARO dabao!<br><br>⬅️➡️ Swipe = Rasta Badlo<br>⬆️ Jump = SAB se bacho!<br>⬇️ Roll = Board se bacho<br>🪙 Coin hi coin hai!";
-msg.style.display="block";
-</script>
-</body>
-</html>
+ gameOver=true; stopRunning(); clearInterval(lineInterval); clearInterval(gameInterval); clear
