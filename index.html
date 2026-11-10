@@ -36,4 +36,142 @@ button{padding:12px 18px;border:0;border-radius:30px;background:#ffd34f;font-siz
 #leftBtn{background:#2196F3;color:white}
 #jumpBtn{background:#ff5722;color:white}
 #rollBtn{background:#9C27B0;color:white}
-#rightBtn{background:#
+#rightBtn{background:#4CAF50;color:white}
+.songBtn{padding:12px 20px;font-size:16px;margin:6px 4px;border:2px solid white}
+#playBtn{background:#00E676;color:#000}
+#stopBtn{background:#ff5722;color:white}
+.small{font-size:12px;opacity:.7;margin-top:5px}
+</style>
+</head>
+<body>
+<audio id="mySong" loop><source src="farming.mp3" type="audio/mpeg"></audio>
+<div class="top">
+<h1>🚜 BHAG KISAN BHAG 👨‍🌾</h1>
+<p>🎵 Farming - Laddi Chahal 🎵</p>
+<div class="score-box"><div>Score: <span id="score">0</span></div><div>🪙 Coin: <span id="coins">0</span></div><div>Best: <span id="best">0</span></div></div>
+<button id="playBtn" class="songBtn" onclick="playMySong()">🔊 SONG CHALAO</button>
+<button id="stopBtn" class="songBtn" onclick="stopMySong()">🔇 SONG BAND KARO</button>
+<p id="songStatus" style="font-size:12px;color:#ffdf70;">Song band hai, SONG CHALAO dabao!</p>
+</div>
+<div id="game">
+<div class="lane" id="lane1"></div>
+<div class="lane" id="lane2"></div>
+<div class="lane" id="lane3"></div>
+<div id="teacher">👩‍🏫</div>
+<div id="player">👨‍🌾</div>
+<div id="msg"><h2 id="msgTitle">Ready Ho?</h2><p id="msgText"></p><button onclick="startGame()">🔁 Phir Se Bhago</button></div>
+</div>
+<div class="controls">
+<button id="leftBtn" onclick="move(-1)">⬅️ LEFT</button>
+<button id="jumpBtn" onclick="jump()">⬆️ JUMP</button>
+<button id="rollBtn" onclick="roll()">⬇️ ROLL</button>
+<button id="rightBtn" onclick="move(1)">RIGHT ➡️</button>
+</div>
+<p class="small">Pehle SONG CHALAO dabao, fir game khelo!</p>
+<script>
+let mySong = document.getElementById("mySong");
+let songStatus = document.getElementById("songStatus");
+function playMySong(){
+  mySong.volume = 1.0;
+  mySong.play().then(()=>{ songStatus.innerText = "✅ Farming gaana baj raha hai! 🎵🚜"; }).catch(()=>{ songStatus.innerText = "❌ Gaana nahi mila!"; alert("Gaana nahi mila! GitHub me farming.mp3 upload kiya hai na?"); });
+}
+function stopMySong(){ mySong.pause(); songStatus.innerText = "Song band hai"; }
+let player=document.getElementById("player");
+let teacher=document.getElementById("teacher");
+let game=document.getElementById("game");
+let scoreEl=document.getElementById("score");
+let coinsEl=document.getElementById("coins");
+let bestEl=document.getElementById("best");
+let msg=document.getElementById("msg");
+let msgTitle=document.getElementById("msgTitle");
+let msgText=document.getElementById("msgText");
+let score=0,coins=0,best=localStorage.getItem("bhagSubwayBest")||0;
+bestEl.innerText=best;
+let isJumping=false,isRolling=false,gameOver=false,gameStarted=false,objs=[];
+let gameInterval,spawnInterval,lineInterval,runInterval,speed=5;
+let currentLane=1;
+let lanePos=[16.66,50,83.33];
+let funnyLines=["Teacher ne pakad liya! Kal mummy ko lekar aana! 😂","Book se takra gaya bhai!","Coin ke chakkar me pakda gaya!"];
+let runFrames=["👨‍🌾","🧑‍🌾","👨‍🌾","🚜"];
+let runIndex=0;
+function startRunning(){
+ player.classList.add("running"); teacher.classList.add("running");
+ if(runInterval) clearInterval(runInterval);
+ runInterval=setInterval(()=>{ if(gameStarted && !gameOver && !isJumping && !isRolling){ runIndex=(runIndex+1)%runFrames.length; player.innerText=runFrames[runIndex]; } },140);
+}
+function stopRunning(){ player.classList.remove("running"); teacher.classList.remove("running"); clearInterval(runInterval); player.innerText="👨‍🌾"; }
+function startRoadLines(){
+ if(lineInterval) clearInterval(lineInterval);
+ lineInterval=setInterval(()=>{
+  if(!gameStarted || gameOver) return;
+  [16.66,50,83.33].forEach(x=>{
+   let line=document.createElement("div"); line.className="roadLine"; line.style.left=x+"%"; line.style.top="-60px"; game.appendChild(line);
+   let mv=setInterval(()=>{ if(gameOver){ clearInterval(mv); line.remove(); return; } let t=parseInt(line.style.top); t+=speed+2; line.style.top=t+"px"; if(t>480){ clearInterval(mv); line.remove(); } },28);
+  });
+ },350);
+}
+function move(dir){
+ if(gameOver) return;
+ if(!gameStarted){ startGame(); return; }
+ currentLane=Math.max(0,Math.min(2,currentLane+dir));
+ player.style.left=lanePos[currentLane]+"%"; teacher.style.left=lanePos[currentLane]+"%";
+}
+function jump(){
+ if(gameOver) return;
+ if(!gameStarted){ startGame(); return; }
+ if(isJumping||isRolling) return;
+ isJumping=true; player.classList.remove("running"); player.innerText="🦸";
+ let pos=25;
+ let up=setInterval(()=>{ pos+=18; player.style.bottom=pos+"px"; if(pos>=170){ clearInterval(up); let down=setInterval(()=>{ pos-=16; player.style.bottom=pos+"px"; if(pos<=25){ clearInterval(down); player.style.bottom="25px"; isJumping=false; if(gameStarted && !gameOver) player.classList.add("running"); player.innerText="👨‍🌾"; } },18); } },18);
+}
+function roll(){
+ if(gameOver) return;
+ if(!gameStarted){ startGame(); return; }
+ if(isRolling||isJumping) return;
+ isRolling=true; player.classList.remove("running"); player.innerText="🙇"; player.classList.add("roll");
+ setTimeout(()=>{ player.innerText="👨‍🌾"; player.classList.remove("roll"); isRolling=false; if(gameStarted && !gameOver) player.classList.add("running"); },650);
+}
+function spawn(){
+ if(gameOver) return;
+ let isCoin=Math.random()<0.65;
+ let lane=Math.floor(Math.random()*3);
+ let el=document.createElement("div"); el.dataset.lane=lane;
+ if(isCoin){
+  el.className="obj coin"; el.innerText="🪙"; el.dataset.type="coin";
+  if(Math.random()<0.4){ for(let i=1;i<=2;i++){ let extra=document.createElement("div"); extra.className="obj coin"; extra.innerText="🪙"; extra.dataset.type="coin"; extra.dataset.lane=lane; extra.style.left=lanePos[lane]+"%"; extra.style.top=(-50 - i*55)+"px"; game.appendChild(extra); objs.push(extra); let mv2=setInterval(()=>{ if(gameOver){clearInterval(mv2);return;} let t=parseInt(extra.style.top); t+=speed; extra.style.top=t+"px"; if(parseInt(extra.dataset.lane)===currentLane && t>330 && t<420){ coins++; coinsEl.innerText=coins; extra.remove(); objs=objs.filter(o=>o!==extra); clearInterval(mv2); } if(t>480){ clearInterval(mv2); extra.remove(); objs=objs.filter(o=>o!==extra); } },28); } }
+ } else {
+  el.className="obj"; el.dataset.type="obs"; let items=["🪑","🧹","🚧","📚","🚂","🪣","📖"]; el.innerText=items[Math.floor(Math.random()*items.length)]; if(Math.random()<0.18){ el.innerText="🚧"; el.dataset.high="1"; el.style.fontSize="52px"; }
+ }
+ el.style.left=lanePos[lane]+"%"; el.style.top="-50px"; game.appendChild(el); objs.push(el);
+ let mv=setInterval(()=>{ if(gameOver){ clearInterval(mv); return; } let top=parseInt(el.style.top); top+=speed; el.style.top=top+"px"; let pBottom=parseInt(player.style.bottom||25); let sameLane=(parseInt(el.dataset.lane)===currentLane); if(sameLane && top>330 && top<420){ if(el.dataset.type==="coin"){ coins++; coinsEl.innerText=coins; el.remove(); objs=objs.filter(o=>o!==el); clearInterval(mv); } else { if(el.dataset.high==="1"){ if(!isRolling && pBottom<60){ gameOverFunc(); clearInterval(mv); } } else { if(pBottom<60){ gameOverFunc(); clearInterval(mv); } } } } if(top>480){ clearInterval(mv); el.remove(); objs=objs.filter(o=>o!==el); } },28);
+}
+function startGame(){
+ score=0; coins=0; scoreEl.innerText=0; coinsEl.innerText=0; gameOver=false; gameStarted=true; msg.style.display="none";
+ currentLane=1; speed=5; player.style.left="50%"; teacher.style.left="50%"; player.style.bottom="25px"; player.innerText="👨‍🌾";
+ objs.forEach(o=>o.remove()); objs=[];
+ clearInterval(gameInterval); clearInterval(spawnInterval); startRunning(); startRoadLines();
+ gameInterval=setInterval(()=>{ if(!gameOver){ score++; scoreEl.innerText=score; if(score%200===0) speed+=0.4; if(score>best){ best=score; bestEl.innerText=best; localStorage.setItem("bhagSubwayBest",best); } } },80);
+ spawnInterval=setInterval(spawn,600);
+}
+function gameOverFunc(){
+ gameOver=true; stopRunning(); clearInterval(lineInterval); clearInterval(gameInterval); clearInterval(spawnInterval);
+ let line=funnyLines[Math.floor(Math.random()*funnyLines.length)];
+ msgTitle.innerText="Pakde Gaye! 😭";
+ msgText.innerHTML=`<b>Score: ${score} | Coin: ${coins} 🪙</b><br>${line}<br><br>Best: ${best}`;
+ msg.style.display="block"; gameStarted=false;
+}
+document.addEventListener("keydown",(e)=>{
+ if(e.code==="Space"||e.code==="ArrowUp"){ e.preventDefault(); jump(); }
+ if(e.code==="ArrowLeft"){ e.preventDefault(); move(-1); }
+ if(e.code==="ArrowRight"){ e.preventDefault(); move(1); }
+ if(e.code==="ArrowDown"){ e.preventDefault(); roll(); }
+});
+let sx=0,sy=0;
+game.addEventListener("touchstart",e=>{ sx=e.touches[0].clientX; sy=e.touches[0].clientY; },{passive:true});
+game.addEventListener("touchend",e=>{ let dx=e.changedTouches[0].clientX-sx; let dy=e.changedTouches[0].clientY-sy; if(Math.abs(dx)>Math.abs(dy)){ if(dx<-35) move(-1); else if(dx>35) move(1); } else { if(dy<-35) jump(); else if(dy>35) roll(); } },{passive:true});
+msgTitle.innerText="Ready Ho Kisan? 🚜🎵";
+msgText.innerHTML="Ab Tu Tractor Wala Kisan Hai!<br><br>⬅️➡️ Swipe = Rasta Badlo<br>⬆️ Jump = SAB se bacho!<br>⬇️ Roll = Board se bacho<br>🪙 Coin hi coin hai!";
+msg.style.display="block";
+</script>
+</body>
+  </html>
