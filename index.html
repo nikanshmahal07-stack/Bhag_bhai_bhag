@@ -1,186 +1,168 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<title>Bhag Bhai Bhag - Tractor Wala Kisan!</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BHAG KISAN BHAG</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Arial,sans-serif;background:#1a1a2e;color:white;text-align:center;overflow:hidden;user-select:none;-webkit-tap-highlight-color:transparent}
-.top{padding:8px}
-.top h1{font-size:23px;color:#ffdf70}
-.top p{font-size:13px;opacity:.8}
-.score-box{display:flex;justify-content:center;gap:8px;margin-top:6px}
-.score-box div{background:#ffdf70;color:#000;padding:6px 12px;border-radius:20px;font-weight:bold;font-size:14px}
-#game{position:relative;width:100%;max-width:480px;height:460px;margin:6px auto;background:#4CAF50;border:3px solid #ffdf70;border-radius:15px;overflow:hidden;touch-action:none;transition:background 0.8s}
-#bgLabel{position:absolute;top:8px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.6);padding:5px 12px;border-radius:20px;font-size:13px;font-weight:bold;z-index:20;white-space:nowrap}
-.lane{position:absolute;top:0;height:100%;width:33.33%;border-right:2px dashed rgba(255,255,255,.4);transition:background 0.8s}
-#lane1{left:0}
-#lane2{left:33.33%}
-#lane3{left:66.66%;border-right:0}
-.roadLine{position:absolute;width:6px;height:50px;background:#fff;border-radius:5px;opacity:.7;z-index:1}
-#player{position:absolute;bottom:25px;left:50%;font-size:52px;z-index:10;transition:left .16s;transform:translateX(-50%)}
-#player.running{animation:runBounce 0.28s infinite}
-@keyframes runBounce{0%{transform:translateX(-50%) translateY(0) rotate(-3deg)}50%{transform:translateX(-50%) translateY(-8px) rotate(3deg)}100%{transform:translateX(-50%) translateY(0) rotate(-3deg)}}
-#player.roll{font-size:38px !important;animation:none}
-#teacher{position:absolute;bottom:2px;left:50%;font-size:44px;z-index:5;transition:left .16s;transform:translateX(-50%)}
-#teacher.running{animation:runBounce 0.32s infinite}
+body{background:#1a1a2e;color:white;text-align:center;font-family:Arial;margin:0}
+h1{color:#ffdf70}
+#scoreBar{background:#ffdf70;color:#000;display:inline-block;padding:8px 15px;border-radius:20px;font-weight:bold}
+#game{position:relative;width:95%;max-width:480px;height:460px;margin:10px auto;background:#4CAF50;border:3px solid #ffdf70;border-radius:15px;overflow:hidden}
+#bgLabel{position:absolute;top:8px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.6);padding:5px 12px;border-radius:20px;font-size:13px;z-index:20;white-space:nowrap}
+#player{position:absolute;bottom:25px;left:50%;font-size:55px;z-index:10;transform:translateX(-50%);transition:left .15s}
+#player.run{animation:bounce .3s infinite}
+@keyframes bounce{0%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-8px)}100%{transform:translateX(-50%) translateY(0)}}
+#teacher{position:absolute;bottom:2px;left:50%;font-size:44px;z-index:5;transform:translateX(-50%);transition:left .15s}
 .obj{position:absolute;font-size:42px;z-index:4;transform:translateX(-50%)}
-.coin{position:absolute;font-size:32px;z-index:3;transform:translateX(-50%);animation:spin 0.6s infinite}
-@keyframes spin{0%{transform:translateX(-50%) scaleX(1)}50%{transform:translateX(-50%) scaleX(0.3)}100%{transform:translateX(-50%) scaleX(1)}}
-#msg{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,.92);padding:20px;border-radius:15px;width:88%;z-index:30;display:none}
-#msg h2{color:#ffdf70;font-size:23px;margin-bottom:8px}
-#msg p{font-size:15px;line-height:1.6}
-button{padding:12px 18px;border:0;border-radius:30px;background:#ffd34f;font-size:16px;font-weight:bold;margin-top:8px;cursor:pointer}
-.controls{display:flex;justify-content:center;gap:8px;max-width:480px;margin:0 auto;padding:0 8px}
-.controls button{flex:1;padding:15px 3px;font-size:16px}
-#leftBtn{background:#2196F3;color:white}
-#jumpBtn{background:#ff5722;color:white}
-#rollBtn{background:#9C27B0;color:white}
-#rightBtn{background:#4CAF50;color:white}
-.songBtn{padding:12px 20px;font-size:16px;margin:6px 4px;border:2px solid white}
-#playBtn{background:#00E676;color:#000}
-#stopBtn{background:#ff5722;color:white}
-.small{font-size:12px;opacity:.7;margin-top:5px}
+.note{position:absolute;font-size:32px;z-index:3;transform:translateX(-50%)}
+#startBtn{background:#00E676;color:#000;font-size:22px;font-weight:bold;padding:15px 30px;border-radius:30px;border:3px solid white;margin:10px}
+#songBtn{background:#ffdf70;color:#000;font-size:16px;font-weight:bold;padding:10px 20px;border-radius:30px;margin:5px}
+.controls{display:flex;gap:8px;max-width:480px;margin:0 auto;padding:0 10px}
+.controls button{flex:1;padding:15px 2px;font-size:16px;border-radius:15px;border:0;font-weight:bold;color:white}
 </style>
 </head>
 <body>
-<audio id="mySong" loop><source src="farming.mp3" type="audio/mpeg"></audio>
-<div class="top">
 <h1>🚜 BHAG KISAN BHAG 👨‍🌾</h1>
-<p>🎵 Farming - Laddi Chahal 🎵</p>
-<div class="score-box"><div>Score: <span id="score">0</span></div><div>💵 Note: <span id="coins">0</span></div><div>Best: <span id="best">0</span></div></div>
-<button id="playBtn" class="songBtn" onclick="playMySong()">🔊 SONG CHALAO</button>
-<button id="stopBtn" class="songBtn" onclick="stopMySong()">🔇 SONG BAND KARO</button>
-<p id="songStatus" style="font-size:12px;color:#ffdf70;">Song band hai, SONG CHALAO dabao!</p>
-</div>
+<div id="scoreBar">Score: <span id="score">0</span> | 💵 Note: <span id="coins">0</span></div><br>
+<audio id="mySong" loop><source src="farming.mp3" type="audio/mpeg"></audio>
+<button id="songBtn" onclick="document.getElementById('mySong').play()">🔊 SONG CHALAO</button><br>
+<button id="startBtn">▶️ START - YAHAN DABAO</button>
+<p id="status" style="color:#ffdf70;">START dabao!</p>
 
 <div id="game">
 <div id="bgLabel">🌾 KHET ME BHAG RAHA HAI!</div>
-<div class="lane" id="lane1"></div>
-<div class="lane" id="lane2"></div>
-<div class="lane" id="lane3"></div>
 <div id="teacher">👩‍🏫</div>
 <div id="player">👨‍🌾</div>
-<div id="msg"><h2 id="msgTitle">Ready Ho?</h2><p id="msgText"></p><button onclick="startGame()">🔁 Phir Se Bhago</button></div>
 </div>
 
 <div class="controls">
-<button id="leftBtn" onclick="move(-1)">⬅️ LEFT</button>
-<button id="jumpBtn" onclick="jump()">⬆️ JUMP</button>
-<button id="rollBtn" onclick="roll()">⬇️ ROLL</button>
-<button id="rightBtn" onclick="move(1)">RIGHT ➡️</button>
+<button style="background:#2196F3" onclick="moveLeft()">⬅️ LEFT</button>
+<button style="background:#ff5722" onclick="doJump()">⬆️ JUMP</button>
+<button style="background:#9C27B0" onclick="doRoll()">⬇️ ROLL</button>
+<button style="background:#4CAF50" onclick="moveRight()">RIGHT ➡️</button>
 </div>
-<p class="small">Khet -> Gaon -> Raat! Note uthate jao!</p>
 
 <script>
-let mySong=document.getElementById("mySong");
-let songStatus=document.getElementById("songStatus");
-function playMySong(){ mySong.volume=1.0; mySong.play().then(()=>{ songStatus.innerText="✅ Farming gaana baj raha hai! 🎵🚜"; }).catch(()=>{ songStatus.innerText="❌ Gaana nahi mila! farming.mp3 upload kiya?"; alert("Gaana nahi mila! GitHub me farming.mp3 upload kiya hai na?"); }); }
-function stopMySong(){ mySong.pause(); songStatus.innerText="Song band hai"; }
+// Sab kuch window ke andar taaki button pakka kaam kare
+var player = document.getElementById("player");
+var teacher = document.getElementById("teacher");
+var game = document.getElementById("game");
+var bgLabel = document.getElementById("bgLabel");
+var scoreEl = document.getElementById("score");
+var coinsEl = document.getElementById("coins");
+var statusEl = document.getElementById("status");
+var startBtn = document.getElementById("startBtn");
 
-let player=document.getElementById("player");
-let teacher=document.getElementById("teacher");
-let game=document.getElementById("game");
-let bgLabel=document.getElementById("bgLabel");
-let scoreEl=document.getElementById("score");
-let coinsEl=document.getElementById("coins");
-let bestEl=document.getElementById("best");
-let msg=document.getElementById("msg");
-let msgTitle=document.getElementById("msgTitle");
-let msgText=document.getElementById("msgText");
-let score=0,coins=0,best=localStorage.getItem("bhagSubwayBest")||0;
-bestEl.innerText=best;
-let isJumping=false,isRolling=false,gameOver=false,gameStarted=false,objs=[];
-let gameInterval,spawnInterval,lineInterval,runInterval,speed=5;
-let currentLane=1;
-let lanePos=[16.66,50,83.33];
-let funnyLines=["Teacher ne pakad liya! Kal mummy ko lekar aana! 😂","Tractor se takra gaya bhai!","Note ke chakkar me pakda gaya!"];
-// 1-B TRACTOR WALA KISAN
-let runFrames=["👨‍🌾","🧑‍🌾","👨‍🌾","🚜"];
-let runIndex=0;
+var score = 0, coins = 0, lane = 1;
+var lanePos = [16, 50, 83];
+var isJumping = false, isRolling = false, over = false, started = false;
+var objs = [], gi = null, si = null, runTimer = null;
+var frames = ["👨‍🌾","🧑‍🌾","👨‍🌾","🚜"];
+var fi = 0;
 
-// 4 - SARE BACKGROUND BADALTE RAHENGE
-function updateBackground(){
-  let stage = Math.floor(score/250) % 3; // Har 250 score pe background badlega
-  let l1=document.getElementById("lane1"), l2=document.getElementById("lane2"), l3=document.getElementById("lane3");
-  if(stage===0){
-    // KHET
-    game.style.background="#4CAF50";
-    l1.style.background="#5cb85c"; l2.style.background="#66bb6a"; l3.style.background="#5cb85c";
-    bgLabel.innerText="🌾 KHET ME BHAG RAHA HAI!";
-  } else if(stage===1){
-    // GAON
-    game.style.background="#D2A679";
-    l1.style.background="#C9A86A"; l2.style.background="#D2B48C"; l3.style.background="#C9A86A";
-    bgLabel.innerText="🏡 GAON ME BHAG RAHA HAI!";
-  } else {
-    // RAAT
-    game.style.background="#1a1a3e";
-    l1.style.background="#222244"; l2.style.background="#2a2a4a"; l3.style.background="#222244";
-    bgLabel.innerText="🌙 RAAT ME BHAG RAHA HAI! 🌟";
-  }
+function updateBg(){
+  var s = Math.floor(score/200) % 3;
+  if(s==0){ game.style.background="#4CAF50"; bgLabel.innerText="🌾 KHET ME BHAG RAHA HAI!"; }
+  if(s==1){ game.style.background="#D2A679"; bgLabel.innerText="🏡 GAON ME BHAG RAHA HAI!"; }
+  if(s==2){ game.style.background="#1a1a3e"; bgLabel.innerText="🌙 RAAT ME BHAG RAHA HAI!"; }
 }
 
-function startRunning(){
- player.classList.add("running"); teacher.classList.add("running");
- if(runInterval) clearInterval(runInterval);
- runInterval=setInterval(()=>{ if(gameStarted && !gameOver && !isJumping && !isRolling){ runIndex=(runIndex+1)%runFrames.length; player.innerText=runFrames[runIndex]; } },160);
+function moveLeft(){ move(-1); }
+function moveRight(){ move(1); }
+function move(d){
+  if(!started){ startGame(); return; }
+  lane = Math.max(0, Math.min(2, lane + d));
+  player.style.left = lanePos[lane] + "%";
+  teacher.style.left = lanePos[lane] + "%";
 }
-function stopRunning(){ player.classList.remove("running"); teacher.classList.remove("running"); clearInterval(runInterval); player.innerText="👨‍🌾"; }
-function startRoadLines(){
- if(lineInterval) clearInterval(lineInterval);
- lineInterval=setInterval(()=>{
-  if(!gameStarted || gameOver) return;
-  [16.66,50,83.33].forEach(x=>{
-   let line=document.createElement("div"); line.className="roadLine"; line.style.left=x+"%"; line.style.top="-60px"; game.appendChild(line);
-   let mv=setInterval(()=>{ if(gameOver){ clearInterval(mv); line.remove(); return; } let t=parseInt(line.style.top); t+=speed+2; line.style.top=t+"px"; if(t>480){ clearInterval(mv); line.remove(); } },28);
-  });
- },350);
+function doJump(){
+  if(!started){ startGame(); return; }
+  if(isJumping || isRolling) return;
+  isJumping = true;
+  player.classList.remove("run");
+  player.innerText = "🦸‍♂️";
+  var p = 25;
+  var up = setInterval(function(){
+    p += 18; player.style.bottom = p + "px";
+    if(p >= 160){
+      clearInterval(up);
+      var dn = setInterval(function(){
+        p -= 16; player.style.bottom = p + "px";
+        if(p <= 25){ clearInterval(dn); player.style.bottom = "25px"; isJumping = false; player.classList.add("run"); player.innerText = "👨‍🌾"; }
+      }, 18);
+    }
+  }, 18);
 }
-function move(dir){
- if(gameOver) return;
- if(!gameStarted){ startGame(); return; }
- currentLane=Math.max(0,Math.min(2,currentLane+dir));
- player.style.left=lanePos[currentLane]+"%"; teacher.style.left=lanePos[currentLane]+"%";
-}
-function jump(){
- if(gameOver) return;
- if(!gameStarted){ startGame(); return; }
- if(isJumping||isRolling) return;
- isJumping=true; player.classList.remove("running"); player.innerText="🦸‍♂️";
- let pos=25;
- let up=setInterval(()=>{ pos+=18; player.style.bottom=pos+"px"; if(pos>=170){ clearInterval(up); let down=setInterval(()=>{ pos-=16; player.style.bottom=pos+"px"; if(pos<=25){ clearInterval(down); player.style.bottom="25px"; isJumping=false; if(gameStarted && !gameOver) player.classList.add("running"); player.innerText="👨‍🌾"; } },18); } },18);
-}
-function roll(){
- if(gameOver) return;
- if(!gameStarted){ startGame(); return; }
- if(isRolling||isJumping) return;
- isRolling=true; player.classList.remove("running"); player.innerText="🙇‍♂️"; player.classList.add("roll");
- setTimeout(()=>{ player.innerText="👨‍🌾"; player.classList.remove("roll"); isRolling=false; if(gameStarted && !gameOver) player.classList.add("running"); },650);
+function doRoll(){
+  if(!started){ startGame(); return; }
+  if(isRolling || isJumping) return;
+  isRolling = true;
+  player.classList.remove("run");
+  player.innerText = "🙇‍♂️";
+  player.style.fontSize = "38px";
+  setTimeout(function(){
+    player.innerText = "👨‍🌾";
+    player.style.fontSize = "55px";
+    isRolling = false;
+    if(started && !over) player.classList.add("run");
+  }, 650);
 }
 function spawn(){
- if(gameOver) return;
- let isCoin=Math.random()<0.65;
- let lane=Math.floor(Math.random()*3);
- let el=document.createElement("div"); el.dataset.lane=lane;
- if(isCoin){
-  // 5-A COIN KI JAGAH NOTE 💵
-  el.className="obj coin"; el.innerText="💵"; el.dataset.type="coin";
-  if(Math.random()<0.4){ for(let i=1;i<=2;i++){ let extra=document.createElement("div"); extra.className="obj coin"; extra.innerText="💵"; extra.dataset.type="coin"; extra.dataset.lane=lane; extra.style.left=lanePos[lane]+"%"; extra.style.top=(-50 - i*55)+"px"; game.appendChild(extra); objs.push(extra); let mv2=setInterval(()=>{ if(gameOver){clearInterval(mv2);return;} let t=parseInt(extra.style.top); t+=speed; extra.style.top=t+"px"; if(parseInt(extra.dataset.lane)===currentLane && t>330 && t<420){ coins++; coinsEl.innerText=coins; extra.remove(); objs=objs.filter(o=>o!==extra); clearInterval(mv2); } if(t>480){ clearInterval(mv2); extra.remove(); objs=objs.filter(o=>o!==extra); } },28); } }
- } else {
-  el.className="obj"; el.dataset.type="obs"; let items=["🪑","🧹","🚧","📚","🚜","🪣","🌾"]; el.innerText=items[Math.floor(Math.random()*items.length)]; if(Math.random()<0.18){ el.innerText="🚧"; el.dataset.high="1"; el.style.fontSize="52px"; }
- }
- el.style.left=lanePos[lane]+"%"; el.style.top="-50px"; game.appendChild(el); objs.push(el);
- let mv=setInterval(()=>{ if(gameOver){ clearInterval(mv); return; } let top=parseInt(el.style.top); top+=speed; el.style.top=top+"px"; let pBottom=parseInt(player.style.bottom||25); let sameLane=(parseInt(el.dataset.lane)===currentLane); if(sameLane && top>330 && top<420){ if(el.dataset.type==="coin"){ coins++; coinsEl.innerText=coins; el.remove(); objs=objs.filter(o=>o!==el); clearInterval(mv); } else { if(el.dataset.high==="1"){ if(!isRolling && pBottom<60){ gameOverFunc(); clearInterval(mv); } } else { if(pBottom<60){ gameOverFunc(); clearInterval(mv); } } } } if(top>480){ clearInterval(mv); el.remove(); objs=objs.filter(o=>o!==el); } },28);
+  if(over) return;
+  var isNote = Math.random() < 0.6;
+  var l = Math.floor(Math.random()*3);
+  var el = document.createElement("div");
+  el.setAttribute("data-lane", l);
+  if(isNote){ el.className = "note"; el.innerText = "💵"; el.setAttribute("data-type","note"); }
+  else { el.className = "obj"; el.setAttribute("data-type","obs"); var it = ["🪑","🧹","🚧","📚","🚜","🌾"]; el.innerText = it[Math.floor(Math.random()*it.length)]; if(Math.random()<0.15){ el.innerText="🚧"; el.setAttribute("data-high","1"); } }
+  el.style.left = lanePos[l] + "%";
+  el.style.top = "-50px";
+  game.appendChild(el);
+  objs.push(el);
+  var mv = setInterval(function(){
+    if(over){ clearInterval(mv); return; }
+    var t = parseInt(el.style.top); t += 5; el.style.top = t + "px";
+    var pb = parseInt(player.style.bottom || 25);
+    if(parseInt(el.getAttribute("data-lane")) === lane && t > 330 && t < 420){
+      if(el.getAttribute("data-type") === "note"){ coins++; coinsEl.innerText = coins; el.remove(); objs = objs.filter(function(o){return o!==el}); clearInterval(mv); }
+      else {
+        if(el.getAttribute("data-high") === "1"){ if(!isRolling && pb < 60){ gameOver(); clearInterval(mv); } }
+        else { if(pb < 60){ gameOver(); clearInterval(mv); } }
+      }
+    }
+    if(t > 480){ clearInterval(mv); el.remove(); objs = objs.filter(function(o){return o!==el}); }
+  }, 28);
 }
+
 function startGame(){
- score=0; coins=0; scoreEl.innerText=0; coinsEl.innerText=0; gameOver=false; gameStarted=true; msg.style.display="none";
- currentLane=1; speed=5; player.style.left="50%"; teacher.style.left="50%"; player.style.bottom="25px"; player.innerText="👨‍🌾";
- objs.forEach(o=>o.remove()); objs=[];
- clearInterval(gameInterval); clearInterval(spawnInterval); startRunning(); startRoadLines(); updateBackground();
- gameInterval=setInterval(()=>{ if(!gameOver){ score++; scoreEl.innerText=score; updateBackground(); if(score%200===0) speed+=0.4; if(score>best){ best=score; bestEl.innerText=best; localStorage.setItem("bhagSubwayBest",best); } } },80);
- spawnInterval=setInterval(spawn,600);
+  // Ye alert batayega ki button kaam kar raha hai ya nahi
+  alert("Game Chal Gaya! Ab Bhago! 🚜");
+  score = 0; coins = 0; scoreEl.innerText = 0; coinsEl.innerText = 0;
+  over = false; started = true; lane = 1;
+  player.style.left = "50%"; teacher.style.left = "50%"; player.style.bottom = "25px";
+  player.innerText = "👨‍🌾"; player.classList.add("run");
+  objs.forEach(function(o){ o.remove(); }); objs = [];
+  clearInterval(gi); clearInterval(si); clearInterval(runTimer);
+  startBtn.innerText = "🔁 PHIR SE CHALAO";
+  statusEl.innerText = "✅ Game chal raha hai! Bhago!";
+  updateBg();
+  runTimer = setInterval(function(){ if(started && !over && !isJumping && !isRolling){ fi = (fi+1)%frames.length; player.innerText = frames[fi]; } }, 160);
+  gi = setInterval(function(){ if(!over){ score++; scoreEl.innerText = score; updateBg(); } }, 80);
+  si = setInterval(spawn, 600);
 }
-function gameOverFunc(){
- gameOver=true; stopRunning(); clearInterval(lineInterval); clearInterval(gameInterval); clear
+function gameOver(){
+  over = true; started = false;
+  player.classList.remove("run");
+  clearInterval(gi); clearInterval(si); clearInterval(runTimer);
+  statusEl.innerText = "😭 Pakde gaye! Score: " + score + " | Note: " + coins;
+  startBtn.innerText = "▶️ PHIR SE CHALAO";
+  alert("Pakde Gaye! 😭\nScore: " + score + " | Note: " + coins + " 💵");
+}
+
+// START button ko yahan se joda - isliye pakka chalega
+startBtn.addEventListener("click", startGame);
+
+// Swipe
+var sx=0, sy=0;
+game.addEventListener("touchstart", function(e){ sx=e.touches[0].clientX; sy
