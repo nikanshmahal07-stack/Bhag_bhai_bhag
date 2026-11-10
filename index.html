@@ -3,279 +3,173 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<title>Bhag Bhai Bhag - Teacher Se Bacho!</title>
+<title>Bhag Bhai Bhag - Side Wala Rasta!</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{
- font-family:Arial,sans-serif;
- background:#1a1a2e;
- color:white;
- text-align:center;
- overflow:hidden;
- user-select:none;
- -webkit-tap-highlight-color:transparent;
-}
-.top{
- padding:12px;
-}
-.top h1{font-size:26px;color:#ffdf70}
-.top p{font-size:14px;opacity:0.8}
-.score-box{
- display:flex;
- justify-content:center;
- gap:15px;
- margin-top:10px;
-}
-.score-box div{
- background:#ffdf70;
- color:#000;
- padding:8px 15px;
- border-radius:20px;
- font-weight:bold;
- font-size:16px;
-}
-#game{
- position:relative;
- width:100%;
- max-width:600px;
- height:380px;
- margin:10px auto;
- background:linear-gradient(#87CEEB,#e0f7ff 70%, #7ec850 70%, #5aa83a 70%);
- border:3px solid #ffdf70;
- border-radius:15px;
- overflow:hidden;
-}
-#ground{
- position:absolute;
- bottom:0;left:0;width:100%;height:45px;
- background:#5aa83a;
- border-top:3px solid #3d7a24;
-}
-#player{
- position:absolute;
- bottom:45px;
- left:50px;
- font-size:55px;
- transition:bottom 0.15s;
- z-index:2;
-}
-#teacher{
- position:absolute;
- bottom:45px;
- left:-5px;
- font-size:55px;
- z-index:2;
-}
-.obstacle{
- position:absolute;
- bottom:45px;
- font-size:45px;
- z-index:1;
-}
-#msg{
- position:absolute;
- top:50%;left:50%;
- transform:translate(-50%,-50%);
- background:rgba(0,0,0,0.85);
- padding:20px;
- border-radius:15px;
- width:85%;
- z-index:10;
- display:none;
-}
-#msg h2{color:#ffdf70;font-size:24px;margin-bottom:10px}
-#msg p{font-size:16px;line-height:1.6}
-button{
- padding:14px 25px;
- border:0;border-radius:30px;
- background:#ffd34f;
- font-size:18px;font-weight:bold;
- margin-top:10px;
- cursor:pointer;
-}
-#tapBtn{
- width:90%;
- max-width:600px;
- padding:18px;
- font-size:20px;
- background:#ff5722;
- color:white;
- border-radius:15px;
- margin:10px auto;
- display:block;
-}
-.small{font-size:13px;opacity:0.7;margin-top:8px}
+body{font-family:Arial,sans-serif;background:#1a1a2e;color:white;text-align:center;overflow:hidden;user-select:none;-webkit-tap-highlight-color:transparent}
+.top{padding:10px}
+.top h1{font-size:24px;color:#ffdf70}
+.top p{font-size:13px;opacity:.8}
+.score-box{display:flex;justify-content:center;gap:10px;margin-top:8px}
+.score-box div{background:#ffdf70;color:#000;padding:7px 13px;border-radius:20px;font-weight:bold;font-size:14px}
+#game{position:relative;width:100%;max-width:480px;height:430px;margin:8px auto;background:#87CEEB;border:3px solid #ffdf70;border-radius:15px;overflow:hidden;touch-action:none}
+/* SIDE ME 2 RASTE */
+.road{position:absolute;top:0;height:100%;width:50%;background:#5a5a5a}
+#roadLeft{left:0;background:#6b6b6b;border-right:4px dashed #fff}
+#roadRight{right:0;background:#7a7a7a}
+#centerLine{position:absolute;left:50%;top:0;width:4px;height:100%;background:repeating-linear-gradient(#fff 0 20px, transparent 20px 40px);transform:translateX(-50%);z-index:1}
+#groundBottom{position:absolute;bottom:0;left:0;width:100%;height:10px;background:#333;z-index:2}
+#player{position:absolute;bottom:20px;left:25%;font-size:52px;z-index:5;transition:left .18s, bottom .15s;transform:translateX(-50%) scaleX(1)}
+#teacher{position:absolute;bottom:5px;left:25%;font-size:48px;z-index:4;transition:left .18s;transform:translateX(-50%)}
+.obstacle{position:absolute;font-size:42px;z-index:3;transform:translateX(-50%)}
+#msg{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,.9);padding:20px;border-radius:15px;width:88%;z-index:20;display:none}
+#msg h2{color:#ffdf70;font-size:23px;margin-bottom:8px}
+#msg p{font-size:15px;line-height:1.6}
+button{padding:13px 20px;border:0;border-radius:30px;background:#ffd34f;font-size:17px;font-weight:bold;margin-top:8px;cursor:pointer}
+.controls{display:flex;justify-content:center;gap:10px;max-width:480px;margin:0 auto;padding:0 10px}
+.controls button{flex:1;padding:16px 5px;font-size:18px}
+#leftBtn{background:#2196F3;color:white}
+#jumpBtn{background:#ff5722;color:white}
+#rightBtn{background:#4CAF50;color:white}
+#musicBtn{background:#222;color:#ffdf70;padding:8px 16px;font-size:14px;margin-top:6px;border:1px solid #ffdf70}
+.small{font-size:12px;opacity:.7;margin-top:6px}
 </style>
 </head>
 <body>
-
 <div class="top">
-<h1>🏃 BHAG BHAI BHAG! 🏃</h1>
-<p>Teacher Se Bacho, Warna Pakde Jaoge! 😂</p>
-<div class="score-box">
-<div>Score: <span id="score">0</span></div>
-<div>Best: <span id="best">0</span></div>
-</div>
+<h1>🏃 BHAG BHAI BHAG 🏃</h1>
+<p>Side Wala 2 Rasta Game!</p>
+<div class="score-box"><div>Score: <span id="score">0</span></div><div>Best: <span id="best">0</span></div><div>Rasta: <span id="laneText">Left</span></div></div>
+<button id="musicBtn" onclick="toggleMusic()">🔊 Music: ON</button>
 </div>
 
-<div id="game" onclick="jump()">
+<div id="game">
+<div class="road" id="roadLeft"></div>
+<div class="road" id="roadRight"></div>
+<div id="centerLine"></div>
+<div id="groundBottom"></div>
 <div id="teacher">👩‍🏫</div>
-<div id="player">🏃‍♂️</div>
-<div id="ground"></div>
-
-<div id="msg">
-<h2 id="msgTitle">Pakde Gaye! 😭</h2>
-<p id="msgText"></p>
-<button onclick="startGame()">🔁 Phir Se Bhago</button>
-</div>
+<div id="player">🏃</div>
+<div id="msg"><h2 id="msgTitle">Ready Ho?</h2><p id="msgText"></p><button onclick="startGame()">🔁 Phir Se Bhago</button></div>
 </div>
 
-<button id="tapBtn" onclick="jump()">👆 TAP KARO - JUMP MARO 👆</button>
-<p class="small">Nikansh Mahal ka Game | Dosto ko bhejo aur challenge karo!</p>
-
-<audio id="jumpSound" src="https://www.soundjay.com/buttons/sounds/button-3.mp3"></audio>
+<div class="controls">
+<button id="leftBtn" onclick="changeLane(1)">⬅️ LEFT Rasta</button>
+<button id="jumpBtn" onclick="jump()">👆 JUMP</button>
+<button id="rightBtn" onclick="changeLane(2)">RIGHT Rasta ➡️</button>
+</div>
+<p class="small">Swipe Left / Right se bhi rasta badal sakte ho!</p>
 
 <script>
-let player = document.getElementById("player");
-let game = document.getElementById("game");
-let scoreEl = document.getElementById("score");
-let bestEl = document.getElementById("best");
-let msg = document.getElementById("msg");
-let msgTitle = document.getElementById("msgTitle");
-let msgText = document.getElementById("msgText");
+let player=document.getElementById("player");
+let teacher=document.getElementById("teacher");
+let game=document.getElementById("game");
+let scoreEl=document.getElementById("score");
+let bestEl=document.getElementById("best");
+let laneText=document.getElementById("laneText");
+let msg=document.getElementById("msg");
+let msgTitle=document.getElementById("msgTitle");
+let msgText=document.getElementById("msgText");
+let score=0,best=localStorage.getItem("bhagBest3")||0;
+bestEl.innerText=best;
+let isJumping=false,gameOver=false,gameStarted=false,obstacles=[];
+let gameInterval,obstacleInterval;
+let currentLane=1;
+let laneLeft={1:25,2:75}; // 25% = Left Rasta, 75% = Right Rasta
+let musicOn=true,audioCtx=null,musicInterval=null;
+let funnyLines=["Teacher boli - Beta kal mummy ko lekar aana! 😂","Arre! Bench se takra gaya!","Teacher ne jhadu maar di!","Bhai itna tez bhaga, phir bhi pakda gaya!","Homework nahi kiya tha na?"];
 
-let score = 0;
-let best = localStorage.getItem("bhagBest") || 0;
-bestEl.innerText = best;
+function getAudio(){ if(!audioCtx) audioCtx=new (window.AudioContext||window.webkitAudioContext)(); if(audioCtx.state==='suspended') audioCtx.resume(); return audioCtx; }
+function playTone(freq,dur,type='sine',vol=0.15){ if(!musicOn) return; try{ let ctx=getAudio(); let o=ctx.createOscillator(); let g=ctx.createGain(); o.frequency.value=freq; o.type=type; g.gain.value=vol; o.connect(g); g.connect(ctx.destination); o.start(); o.stop(ctx.currentTime+dur);}catch(e){} }
+function playJumpSound(){ playTone(500,0.12,'sine',0.2); setTimeout(()=>playTone(800,0.12,'sine',0.2),60); }
+function playGameOverSound(){ playTone(300,0.3,'sawtooth',0.15); setTimeout(()=>playTone(200,0.3,'sawtooth',0.15),200); setTimeout(()=>playTone(100,0.4,'sawtooth',0.15),400); }
+function startMusic(){ if(musicInterval) return; let notes=[262,294,330,349,392,349,330,294]; let i=0; musicInterval=setInterval(()=>{ if(musicOn && gameStarted && !gameOver){ playTone(notes[i%notes.length],0.18,'triangle',0.06); i++; } },220); }
+function toggleMusic(){ musicOn=!musicOn; document.getElementById("musicBtn").innerText=musicOn?"🔊 Music: ON":"🔇 Music: OFF"; if(musicOn) startMusic(); }
 
-let isJumping = false;
-let gameOver = false;
-let gameStarted = false;
-let obstacles = [];
-let gameInterval;
-let obstacleInterval;
-
-let funnyLines = [
- "Teacher boli - Beta, kal mummy ko lekar aana! 😂",
- "Arre! Bench se takra gaya, ab to gaye!",
- "Teacher ne jhadu maar di! Chalaak banna pada mehnga!",
- "Bhai itna tez bhaga, phir bhi pakda gaya!",
- "Ab to Principal ke paas jana padega! 😭",
- "Homework nahi kiya tha na? Isliye pakde gaye!"
-];
-
+// SIDE ME RASTA BADLO - LEFT / RIGHT
+function changeLane(lane){
+ if(gameOver) return;
+ if(!gameStarted){ startGame(); return; }
+ currentLane=lane;
+ laneText.innerText = lane===1 ? "Left" : "Right";
+ player.style.left=laneLeft[lane]+"%";
+ teacher.style.left=laneLeft[lane]+"%";
+ playTone(600,0.08,'sine',0.12);
+}
 function jump(){
  if(gameOver) return;
- if(!gameStarted){
-   startGame();
-   return;
- }
+ if(!gameStarted){ startGame(); return; }
  if(isJumping) return;
- isJumping = true;
- let pos = 45;
- let up = setInterval(()=>{
-   pos += 12;
-   player.style.bottom = pos + "px";
-   if(pos >= 170){
-     clearInterval(up);
-     let down = setInterval(()=>{
-       pos -= 12;
-       player.style.bottom = pos + "px";
-       if(pos <= 45){
-         clearInterval(down);
-         player.style.bottom = "45px";
-         isJumping = false;
-       }
-     },20);
-   }
- },20);
+ isJumping=true; playJumpSound();
+ let pos=20;
+ let up=setInterval(()=>{
+  pos+=14; player.style.bottom=pos+"px";
+  if(pos>=130){ clearInterval(up);
+   let down=setInterval(()=>{ pos-=14; player.style.bottom=pos+"px";
+    if(pos<=20){ clearInterval(down); player.style.bottom="20px"; isJumping=false; }
+   },18);
+  }
+ },18);
 }
 
+// Obstacle upar se neeche aayega
 function createObstacle(){
  if(gameOver) return;
- let obs = document.createElement("div");
- obs.className = "obstacle";
- let items = ["🪑","🧹","📚","🪣","🪑"];
- obs.innerText = items[Math.floor(Math.random()*items.length)];
- obs.style.left = "600px";
- game.appendChild(obs);
- obstacles.push(obs);
-
- let move = setInterval(()=>{
-   if(gameOver){
-     clearInterval(move);
-     return;
-   }
-   let left = parseInt(obs.style.left);
-   left -= 7;
-   obs.style.left = left + "px";
-
-   // Collision check
-   let playerBottom = parseInt(player.style.bottom || 45);
-   if(left > 30 && left < 105 && playerBottom < 95){
-     gameOverFunc();
-     clearInterval(move);
-   }
-
-   if(left < -50){
-     clearInterval(move);
-     obs.remove();
-     obstacles = obstacles.filter(o=>o!==obs);
-   }
+ let obs=document.createElement("div");
+ obs.className="obstacle";
+ let lane=Math.random()>0.5?1:2;
+ obs.dataset.lane=lane;
+ let items=["🪑","🧹","📚","🪣","🚧"];
+ obs.innerText=items[Math.floor(Math.random()*items.length)];
+ obs.style.left=laneLeft[lane]+"%";
+ obs.style.top="-50px";
+ game.appendChild(obs); obstacles.push(obs);
+ let move=setInterval(()=>{
+  if(gameOver){ clearInterval(move); return; }
+  let top=parseInt(obs.style.top); top+=5; // Easy speed
+  obs.style.top=top+"px";
+  // EASY Collision - Sirf same side wale raste me ho aur paas ho tabhi takrayega
+  let playerBottom=parseInt(player.style.bottom||20);
+  let isSameLane=(parseInt(obs.dataset.lane)===currentLane);
+  if(isSameLane && top>310 && top<390 && playerBottom<55){
+   gameOverFunc(); clearInterval(move);
+  }
+  if(top>450){ clearInterval(move); obs.remove(); obstacles=obstacles.filter(o=>o!==obs); }
  },30);
 }
-
 function startGame(){
- score = 0;
- scoreEl.innerText = 0;
- gameOver = false;
- gameStarted = true;
- msg.style.display = "none";
- player.style.bottom = "45px";
- obstacles.forEach(o=>o.remove());
- obstacles = [];
-
- clearInterval(gameInterval);
- clearInterval(obstacleInterval);
-
- gameInterval = setInterval(()=>{
-   if(!gameOver){
-     score++;
-     scoreEl.innerText = score;
-     if(score > best){
-       best = score;
-       bestEl.innerText = best;
-       localStorage.setItem("bhagBest", best);
-     }
-   }
- },100);
-
- obstacleInterval = setInterval(createObstacle, 1100);
+ score=0; scoreEl.innerText=0; gameOver=false; gameStarted=true; msg.style.display="none";
+ currentLane=1; laneText.innerText="Left";
+ player.style.left="25%"; teacher.style.left="25%"; player.style.bottom="20px";
+ obstacles.forEach(o=>o.remove()); obstacles=[];
+ clearInterval(gameInterval); clearInterval(obstacleInterval); startMusic();
+ gameInterval=setInterval(()=>{ if(!gameOver){ score++; scoreEl.innerText=score; if(score>best){ best=score; bestEl.innerText=best; localStorage.setItem("bhagBest3",best); } } },100);
+ obstacleInterval=setInterval(createObstacle,1400);
 }
-
 function gameOverFunc(){
- gameOver = true;
- clearInterval(gameInterval);
- clearInterval(obstacleInterval);
- let line = funnyLines[Math.floor(Math.random()*funnyLines.length)];
- msgTitle.innerText = "Pakde Gaye! 😭";
- msgText.innerHTML = `<b>Score: ${score}</b><br>${line}<br><br>Best Score: ${best}`;
- msg.style.display = "block";
- gameStarted = false;
+ gameOver=true; playGameOverSound();
+ clearInterval(gameInterval); clearInterval(obstacleInterval);
+ let line=funnyLines[Math.floor(Math.random()*funnyLines.length)];
+ msgTitle.innerText="Pakde Gaye! 😭";
+ msgText.innerHTML=`<b>Score: ${score}</b><br>${line}<br><br>Best: ${best}<br><br>Tip: Bench jis side pe ho, dusri side pe chale jao!`;
+ msg.style.display="block"; gameStarted=false;
 }
-
-// Keyboard
-document.addEventListener("keydown", (e)=>{
- if(e.code==="Space"){
-   e.preventDefault();
-   jump();
- }
+document.addEventListener("keydown",(e)=>{
+ if(e.code==="Space"){ e.preventDefault(); jump(); }
+ if(e.code==="ArrowLeft"){ e.preventDefault(); changeLane(1); }
+ if(e.code==="ArrowRight"){ e.preventDefault(); changeLane(2); }
 });
+let touchX=0;
+game.addEventListener("touchstart",e=>{ touchX=e.touches[0].clientX; },{passive:true});
+game.addEventListener("touchend",e=>{
+ let dx=e.changedTouches[0].clientX-touchX;
+ if(dx<-40) changeLane(1);
+ else if(dx>40) changeLane(2);
+},{passive:true});
 
-// Pehle se hi msg dikhao
-msgTitle.innerText = "Ready Ho? 🏃";
-msgText.innerHTML = "Teacher peeche padi hai!<br>TAP karke Jump maro aur bacho!<br><br>Bench, Jhadu, Kitab se bachna hai!";
-msg.style.display = "block";
+msgTitle.innerText="Ready Ho? 🏃";
+msgText.innerHTML="Teacher peeche padi hai!<br><br>⬅️ LEFT / ➡️ RIGHT dabake <b>Side Wala Rasta Badlo</b><br>👆 TAP karke <b>Jump</b> maro<br><br>Bench jis side pe ho, dusri side pe chale jao!";
+msg.style.display="block";
 </script>
 </body>
-  </html>
+</html>
